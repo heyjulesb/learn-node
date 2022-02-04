@@ -2,11 +2,10 @@
 const express = require('express');
 const router = express.Router();
 
-//route of our application
+// route of our application
 router.get('/', (req, res) => {
   res.render('index')
 });
 
-//exporting the router
-
+// exporting the router
 module.exports = router;
