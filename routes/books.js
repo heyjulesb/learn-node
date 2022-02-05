@@ -1,14 +1,14 @@
 // setting all the routes for the index of our application
-const express = require('express');
-const author = require('../models/author');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs'); //used to delete files we don't need
+const express = require("express");
+const author = require("../models/author");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs"); //used to delete files we don't need
 const router = express.Router();
-const Author = require('../models/author');
-const Book = require('../models/book');
-const uploadPath = path.join('public', Book.coverImageBasePath);
-const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif'];
+const Author = require("../models/author");
+const Book = require("../models/book");
+const uploadPath = path.join("public", Book.coverImageBasePath);
+const imageMimeTypes = ["image/jpeg", "image/png", "images/gif"];
 const upload = multer({
   dest: uploadPath,
   fileFilter: (req, file, callback) => {
@@ -16,35 +16,35 @@ const upload = multer({
   },
 });
 // All books route
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   let query = Book.find();
-  if (req.query.title !== null && req.query.title != '') {
-    query = query.regex('title', new RegExp(req.query.title, 'i'));
+  if (req.query.title !== null && req.query.title != "") {
+    query = query.regex("title", new RegExp(req.query.title, "i"));
   }
-  if (req.query.publishedBefore !== null && req.query.publishedBefore != '') {
-    query = query.lte('publishDate', req.query.publishedBefore);
+  if (req.query.publishedBefore !== null && req.query.publishedBefore != "") {
+    query = query.lte("publishDate", req.query.publishedBefore);
   }
-  if (req.query.publishedAfter !== null && req.query.publishedAfter != '') {
-    query = query.gte('publishDate', req.query.publishedAfter);
+  if (req.query.publishedAfter !== null && req.query.publishedAfter != "") {
+    query = query.gte("publishDate", req.query.publishedAfter);
   }
   try {
     const books = await query.exec();
-    res.render('books/index', {
+    res.render("books/index", {
       books: books,
       searchOptions: req.query,
     });
   } catch {
-    res.redirect('/');
+    res.redirect("/");
   }
 });
 
 // New book routes - display form
-router.get('/new', async (req, res) => {
+router.get("/new", async (req, res) => {
   renderNewPage(res, new Book());
 });
 
 // Create book Route
-router.post('/', upload.single('cover'), async (req, res) => {
+router.post("/", upload.single("cover"), async (req, res) => {
   const fileName = req.file != null ? req.file.filename : null;
   const book = new Book({
     title: req.body.title,
@@ -81,10 +81,10 @@ async function renderNewPage(res, book, hasError = false) {
       authors: authors,
       book: book,
     };
-    if (hasError) params.errorMessage = 'Error Creating Book';
-    res.render('books/new', params);
+    if (hasError) params.errorMessage = "Error Creating Book";
+    res.render("books/new", params);
   } catch {
-    res.redirect('/books');
+    res.redirect("/books");
   }
 }
 //exporting the router

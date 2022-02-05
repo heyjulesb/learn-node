@@ -1,5 +1,5 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
 }
 // importing the modules
 const { application } = require("express");
@@ -19,20 +19,24 @@ app.set("layout", "layouts/layout");
 app.use(expressLayouts);
 //where our public files e.g. css, js, images etc
 app.use(express.static("public"));
-app.use(express.urlencoded({ limit: '10mb', extended: false}));
+app.use(express.urlencoded({ limit: "10mb", extended: false }));
 
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
-db.on('error', error => console.error(error));
-db.once('open', () => console.log('Connected to Mongoose'));
+db.on("error", (error) => console.error(error));
+db.once("open", () => console.log("Connected to Mongoose"));
 
 // using the routers
-app.use('/', indexRouter);
-app.use('/authors', authorRouter);
-app.use('/books', bookRouter);
+app.use("/", indexRouter);
+app.use("/authors", authorRouter);
+app.use("/books", bookRouter);
 
 // default port 3000 set
-app.listen(process.env.PORT || 3000, function(){
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+app.listen(process.env.PORT || 3000, function () {
+  console.log(
+    "Express server listening on port %d in %s mode",
+    this.address().port,
+    app.settings.env
+  );
 });
