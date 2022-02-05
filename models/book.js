@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 // creating a schema/DB table
 const bookSchema = new mongoose.Schema({
@@ -39,9 +39,9 @@ const bookSchema = new mongoose.Schema({
 });
 
 bookSchema.virtual("coverImagePath").get(function () {
-  if (this.coverImage != null && this.coverImageType != nuill) {
+  if (this.coverImage != null && this.coverImageType != null) {
     return `data:${
-      this.coverImageTyoe
+      this.coverImageType
     };charset=utf-8;base64,${this.coverImage.toString("base64")}`;
   }
 });
