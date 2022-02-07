@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 // creating a schema/DB table
 const bookSchema = new mongoose.Schema({
@@ -34,17 +34,17 @@ const bookSchema = new mongoose.Schema({
   author: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "Author",
+    ref: 'Author',
   },
 });
 
-bookSchema.virtual("coverImagePath").get(function () {
+bookSchema.virtual('coverImagePath').get(function () {
   if (this.coverImage != null && this.coverImageType != null) {
     return `data:${
       this.coverImageType
-    };charset=utf-8;base64,${this.coverImage.toString("base64")}`;
+    };charset=utf-8;base64,${this.coverImage.toString('base64')}`;
   }
 });
 
 // name of our table inside the DB. bookSchema defines the schema inside the table
-module.exports = mongoose.model("Book", bookSchema);
+module.exports = mongoose.model('Book', bookSchema);

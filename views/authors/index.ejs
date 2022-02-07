@@ -12,5 +12,5 @@
 <a href="/authors/<%= author.id %>/edit">Edit</a>
 <!-- _method will tell the server that this is a DELETE request and not a POST request, 
 which will then call the delete author router in the authors.js  -->
-<%- include('../partials/deleteForm', { url: `/authors/${author.id}`}) %> 
-<% }) %>
+<%- include('../partials/deleteForm', { url: `/authors/${author.id}`}) %> <% })
+%>
